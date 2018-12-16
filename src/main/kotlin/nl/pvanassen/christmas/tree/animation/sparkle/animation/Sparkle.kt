@@ -18,7 +18,7 @@ class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Ani
 
     private var white = false
 
-    override fun getFrame(): ByteArray {
+    override fun getFrame(seed: Long, frame: Int, nsPerFrame: Int): ByteArray {
         val color = if (white) {
             ColorUtils.makeColor(255, 255, 255)
         }
@@ -61,4 +61,5 @@ class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Ani
                 cnt--
             }
             return ColorUtils.makeColorHSB(cnt.toFloat(), 1f, 1f)
-        }}
+        }
+}
