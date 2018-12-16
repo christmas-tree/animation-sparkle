@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: christmas-tree-animation-disco
+    name: christmas-tree-animation-sparkle
     id: ${random.shortuuid}
 consul:
   client:
@@ -9,7 +9,7 @@ consul:
       tags:
       - christmas-tree
       - animation
-      - disco
+      - sparkle
       retry-count: 5
       fail-fast: true
     defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"

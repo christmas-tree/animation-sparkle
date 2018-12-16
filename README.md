@@ -1,6 +1,6 @@
-# Christmas tree animation: Disco!
+# Christmas tree animation: Sparkle!
 
-A websocket server serving n seconds of disco colored leds!
+A server serving sparkles!
 
 
 The following environment variables can be used for configuration: 

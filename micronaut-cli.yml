@@ -1,5 +1,5 @@
 profile: service
-defaultPackage: nl.pvanassen.christmas.tree.animation.disco
+defaultPackage: nl.pvanassen.christmas.tree.animation.sparkle
 ---
 testFramework: spek
 sourceLanguage: kotlin

@@ -53,7 +53,7 @@ pipeline {
                 stage ('Docker snapshot') {
                     steps {
                         script {
-                            docker.build "christmas-tree-animation-disco:$BUILD_NUMBER"
+                            docker.build "christmas-tree-animation-sparkle:$BUILD_NUMBER"
                         }
                     }
                 }
@@ -72,7 +72,7 @@ pipeline {
                 stage ('Docker latest') {
                     steps {
                         script {
-                            def image = docker.build "$DOCKER_REPO/christmas-tree-animation-disco`:latest"
+                            def image = docker.build "$DOCKER_REPO/christmas-tree-animation-sparkle:latest"
                             image.push()
                         }
                     }
