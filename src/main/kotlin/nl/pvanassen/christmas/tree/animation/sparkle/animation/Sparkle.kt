@@ -12,11 +12,15 @@ class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Ani
 
     private val sparkles = Array(treeModel.strips) { IntArray(treeModel.ledsPerStrip) }
 
+    private val direction = Array(treeModel.strips) { BooleanArray(treeModel.ledsPerStrip) }
+
     private val sparkleColor = Array(treeModel.strips) { IntArray(treeModel.ledsPerStrip) }
 
     private var cnt: Double = 0.toDouble()
 
     private var white = false
+
+    private val steps = arrayOf(255, 210, 180, 140, 110, 80, 40)
 
     override fun getFrame(seed: Long, frame: Int, nsPerFrame: Int): ByteArray {
         val color = if (white) {
@@ -27,29 +31,32 @@ class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Ani
         }
         for (x in sparkles.indices) {
             for (y in 0 until sparkles[x].size - 2) {
-                when {
-                    sparkles[x][y] == 255 -> {
-                        sparkles[x][y] = 126
-                        sparkleColor[x][y] = ColorUtils.fadeColor(color, 126)
-                    }
-                    sparkles[x][y] == 126 -> {
-                        sparkles[x][y] = 0
-                        sparkleColor[x][y] = 0
-                    }
-                    sparkles[x][y] == 128 -> {
-                        sparkles[x][y] = 255
-                        sparkleColor[x][y] = ColorUtils.fadeColor(color, 255)
-                    }
+                val step = steps.indexOf(sparkles[x][y])
+                if (step == -1) {
+                    continue
                 }
+                if (step == steps.size - 1 && direction[x][y]) {
+                    direction[x][y] = false
+                }
+                val brightness = if (step == 0) {
+                    0
+                }
+                else if (direction[x][y]) {
+                    steps[step + 1]
+                }
+                else {
+                    steps[step - 1]
+                }
+                sparkles[x][y] = brightness
+                sparkleColor[x][y] = ColorUtils.fadeColor(color, brightness)
                 canvas.setValue(x, y + 1, sparkleColor[x][y])
             }
         }
-        for (i in 0..2) {
-            (0 until treeModel.strips).forEach {idx ->
-                val y = CommonUtils.getRandom(treeModel.ledsPerStrip)
-                sparkles[idx][y] = 128
-                sparkleColor[idx][y] = ColorUtils.fadeColor(color, 128)
-            }
+        (0 until treeModel.strips).forEach {idx ->
+            val y = CommonUtils.getRandom(treeModel.ledsPerStrip)
+            sparkles[idx][y] = steps[steps.size - 1]
+            sparkleColor[idx][y] = ColorUtils.fadeColor(color, steps[steps.size - 1])
+            direction[idx][y] = true
         }
         return canvas.getValues()
     }
