@@ -10,9 +10,9 @@ import javax.inject.Singleton
 @Singleton
 class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Animation {
 
-    private val sparkles = Array(treeModel.strips) { IntArray(60) }
+    private val sparkles = Array(treeModel.strips) { IntArray(treeModel.ledsPerStrip) }
 
-    private val sparkleColor = Array(treeModel.strips) { IntArray(60) }
+    private val sparkleColor = Array(treeModel.strips) { IntArray(treeModel.ledsPerStrip) }
 
     private var cnt: Double = 0.toDouble()
 
@@ -46,7 +46,7 @@ class Sparkle(private val canvas: Canvas, private val treeModel: TreeModel): Ani
         }
         for (i in 0..2) {
             (0 until treeModel.strips).forEach {idx ->
-                val y = CommonUtils.getRandom(60)
+                val y = CommonUtils.getRandom(treeModel.ledsPerStrip)
                 sparkles[idx][y] = 128
                 sparkleColor[idx][y] = ColorUtils.fadeColor(color, 128)
             }
