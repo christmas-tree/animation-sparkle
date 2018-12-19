@@ -10,6 +10,7 @@ consul:
       - christmas-tree
       - animation
       - sparkle
+      - ${STAGE:debug}
       retry-count: 5
       fail-fast: true
     defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
@@ -26,4 +27,4 @@ endpoints:
 christmas:
   tree:
     strips: ${LED_STRIPS:16}
-    leds-per-strip: ${LEDS_PER_STRIP:60}
+    leds-per-strip: ${LEDS_PER_STRIP:20}
