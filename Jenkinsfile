@@ -54,6 +54,7 @@ pipeline {
                     steps {
                         script {
                             docker.build "christmas-tree-animation-sparkle:$BUILD_NUMBER"
+                            docker.build "christmas-tree-animation-sparkle:snapshot"
                         }
                     }
                 }
