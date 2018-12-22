@@ -55,9 +55,8 @@ pipeline {
                         script {
                             def pom = readMavenPom file: 'pom.xml'
                             def name = pom.artifactId
-                            def image = docker.build "$DOCKER_REPO/$name:$BUILD_NUMBER"
+                            def image = docker.build "$DOCKER_REPO/$name:snapshot"
                             image.push()
-                            image.push("snapshot")
                         }
                     }
                 }
