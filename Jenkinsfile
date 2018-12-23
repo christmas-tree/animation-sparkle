@@ -52,11 +52,13 @@ pipeline {
                 }
                 stage ('Docker snapshot') {
                     steps {
-                        script {
-                            def pom = readMavenPom file: 'pom.xml'
-                            def name = pom.artifactId
-                            def image = docker.build "$DOCKER_REPO/$name:snapshot"
-                            image.push()
+                        lock (resource: 'graalvm-native') {
+                            script {
+                                def pom = readMavenPom file: 'pom.xml'
+                                def name = pom.artifactId
+                                def image = docker.build "$DOCKER_REPO/$name:snapshot"
+                                image.push()
+                            }
                         }
                     }
                 }
@@ -74,11 +76,13 @@ pipeline {
                 }
                 stage ('Docker latest') {
                     steps {
-                        script {
-                            def pom = readMavenPom file: 'pom.xml'
-                            def name = pom.artifactId
-                            def image = docker.build "$DOCKER_REPO/$name:latest"
-                            image.push()
+                        lock (resource: 'graalvm-native') {
+                            script {
+                                def pom = readMavenPom file: 'pom.xml'
+                                def name = pom.artifactId
+                                def image = docker.build "$DOCKER_REPO/$name:latest"
+                                image.push()
+                            }
                         }
                     }
                 }
